@@ -1,13 +1,11 @@
 pub fn verse(number: i32) -> String {
-    if number == 99 {
-        return "99 bottles of beer on the wall, 99 bottles of beer.
-Take one down and pass it around, 98 bottles of beer on the wall."
-            .to_string();
-    } else {
-        return "3 bottles of beer on the wall, 3 bottles of beer.
-Take one down and pass it around, 2 bottles of beer on the wall."
-            .to_string();
-    }
+    format!(
+        "{} bottles of beer on the wall, {} bottles of beer.
+Take one down and pass it around, {} bottles of beer on the wall.",
+        number,
+        number,
+        number - 1
+    )
 }
 
 #[cfg(test)]
