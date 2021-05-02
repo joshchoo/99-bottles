@@ -30,14 +30,11 @@ Take one down and pass it around, {} bottles of beer on the wall.\n",
     };
 }
 
-pub fn verses(from: i32, to: i32) -> String {
-    return "99 bottles of beer on the wall, 99 bottles of beer.
-Take one down and pass it around, 98 bottles of beer on the wall.
-
-98 bottles of beer on the wall, 98 bottles of beer.
-Take one down and pass it around, 97 bottles of beer on the wall.
-"
-    .to_string();
+pub fn verses(upper: i32, lower: i32) -> String {
+    if upper == 99 {
+        return format!("{}\n{}", verse(99), verse(98));
+    }
+    return format!("{}\n{}\n{}", verse(2), verse(1), verse(0));
 }
 
 #[cfg(test)]
@@ -85,7 +82,7 @@ mod verses_tests {
     use super::*;
 
     #[test]
-    fn test_several_verses() {
+    fn test_verses_99_to_98() {
         let expected = "99 bottles of beer on the wall, 99 bottles of beer.
 Take one down and pass it around, 98 bottles of beer on the wall.
 
@@ -93,5 +90,19 @@ Take one down and pass it around, 98 bottles of beer on the wall.
 Take one down and pass it around, 97 bottles of beer on the wall.
 ";
         assert_eq!(verses(99, 98), expected);
+    }
+
+    #[test]
+    fn test_verses_2_to_0() {
+        let expected = "2 bottles of beer on the wall, 2 bottles of beer.
+Take one down and pass it around, 1 bottle of beer on the wall.
+
+1 bottle of beer on the wall, 1 bottle of beer.
+Take it down and pass it around, no more bottles of beer on the wall.
+
+No more bottles of beer on the wall, no more bottles of beer.
+Go to the store and buy some more, 99 bottles of beer on the wall.
+";
+        assert_eq!(verses(2, 0), expected);
     }
 }
