@@ -1,18 +1,27 @@
 pub fn verse(number: i32) -> String {
-    if number == 2 {
-        return format!(
-            "2 bottles of beer on the wall, 2 bottles of beer.
+    match number {
+        1 => {
+            return format!(
+                "1 bottle of beer on the wall, 1 bottle of beer.
+Take it down and pass it around, no more bottles of beer on the wall.\n",
+            )
+        }
+        2 => {
+            return format!(
+                "2 bottles of beer on the wall, 2 bottles of beer.
 Take one down and pass it around, 1 bottle of beer on the wall.\n",
-        );
-    }
-
-    format!(
-        "{} bottles of beer on the wall, {} bottles of beer.
+            )
+        }
+        _ => {
+            return format!(
+                "{} bottles of beer on the wall, {} bottles of beer.
 Take one down and pass it around, {} bottles of beer on the wall.\n",
-        number,
-        number,
-        number - 1
-    )
+                number,
+                number,
+                number - 1
+            )
+        }
+    };
 }
 
 #[cfg(test)]
@@ -38,5 +47,12 @@ Take one down and pass it around, 2 bottles of beer on the wall.\n";
         let expected: &str = "2 bottles of beer on the wall, 2 bottles of beer.
 Take one down and pass it around, 1 bottle of beer on the wall.\n";
         assert_eq!(verse(2), expected);
+    }
+
+    #[test]
+    fn test_verse_1_bottle() {
+        let expected: &str = "1 bottle of beer on the wall, 1 bottle of beer.
+Take it down and pass it around, no more bottles of beer on the wall.\n";
+        assert_eq!(verse(1), expected);
     }
 }
