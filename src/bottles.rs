@@ -11,19 +11,21 @@ pub fn verse(number: i32) -> String {
     match number {
         0 => {
             return format!(
-                "No more bottles of beer on the wall, no more bottles of beer.
-Go to the store and buy some more, 99 bottles of beer on the wall.\n"
+                "{capitalized_quantity} bottles of beer on the wall, no more bottles of beer.
+Go to the store and buy some more, 99 bottles of beer on the wall.\n",
+                capitalized_quantity = capitalize(&quantity(number)),
             )
         }
         _ => {
             return format!(
-                "{quantity} {container} of beer on the wall, {quantity} {container} of beer.
-Take {pronoun} down and pass it around, {quantityMinusOne} {containerMinusOne} of beer on the wall.\n",
+                "{capitalized_quantity} {container} of beer on the wall, {quantity} {container} of beer.
+Take {pronoun} down and pass it around, {quantity_minus_one} {container_minus_one} of beer on the wall.\n",
+                capitalized_quantity = capitalize(&quantity(number)),
                 quantity = quantity(number),
                 container = container(number),
-                containerMinusOne = container(number - 1),
+                container_minus_one = container(number - 1),
                 pronoun = pronoun(number),
-                quantityMinusOne = quantity(number - 1),
+                quantity_minus_one = quantity(number - 1),
             )
         }
     };
@@ -48,6 +50,14 @@ fn quantity(number: i32) -> String {
         return "no more".to_string();
     }
     number.to_string()
+}
+
+fn capitalize(word: &str) -> String {
+    let mut chars = word.chars();
+    match chars.next() {
+        None => return "".to_string(),
+        Some(c) => format!("{}{}", c.to_ascii_uppercase(), chars.as_str()),
+    }
 }
 
 #[cfg(test)]
