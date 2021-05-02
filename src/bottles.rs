@@ -23,23 +23,32 @@ Take it down and pass it around, no more bottles of beer on the wall.\n",
         }
         2 => {
             return format!(
-                "{} bottles of beer on the wall, {} bottles of beer.
-Take one down and pass it around, {} bottle of beer on the wall.\n",
-                number,
-                number,
-                number - 1
+                "{number} {container} of beer on the wall, {number} {container} of beer.
+Take one down and pass it around, {numberMinusOne} {containerMinusOne} of beer on the wall.\n",
+                number = number,
+                container = container(number),
+                numberMinusOne = number - 1,
+                containerMinusOne = container(number - 1),
             );
         }
         _ => {
             return format!(
-                "{} bottles of beer on the wall, {} bottles of beer.
-Take one down and pass it around, {} bottles of beer on the wall.\n",
-                number,
-                number,
-                number - 1
+                "{number} {container} of beer on the wall, {number} {container} of beer.
+Take one down and pass it around, {numberMinusOne} {containerMinusOne} of beer on the wall.\n",
+                number = number,
+                container = container(number),
+                numberMinusOne = number - 1,
+                containerMinusOne = container(number - 1),
             )
         }
     };
+}
+
+fn container(number: i32) -> String {
+    if number == 1 {
+        return "bottle".to_string();
+    }
+    "bottles".to_string()
 }
 
 #[cfg(test)]
