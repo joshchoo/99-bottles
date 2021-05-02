@@ -11,23 +11,24 @@ pub fn verse(number: i32) -> String {
     match number {
         0 => {
             return format!(
-                "{capitalized_quantity} bottles of beer on the wall, {quantity} {container} of beer.
-Go to the store and buy some more, 99 bottles of beer on the wall.\n",
+                "{capitalized_quantity} {container} of beer on the wall, {quantity} {container} of beer.
+{action}, 99 bottles of beer on the wall.\n",
                 capitalized_quantity = capitalize(&quantity(number)),
                 quantity = quantity(number),
                 container = container(number),
+                action = action(number)
             )
         }
         _ => {
             return format!(
                 "{capitalized_quantity} {container} of beer on the wall, {quantity} {container} of beer.
-Take {pronoun} down and pass it around, {quantity_minus_one} {container_minus_one} of beer on the wall.\n",
+{action}, {quantity_minus_one} {container_minus_one} of beer on the wall.\n",
                 capitalized_quantity = capitalize(&quantity(number)),
                 quantity = quantity(number),
                 container = container(number),
                 container_minus_one = container(number - 1),
-                pronoun = pronoun(number),
                 quantity_minus_one = quantity(number - 1),
+                action = action(number)
             )
         }
     };
@@ -60,6 +61,16 @@ fn capitalize(word: &str) -> String {
         None => return "".to_string(),
         Some(c) => format!("{}{}", c.to_ascii_uppercase(), chars.as_str()),
     }
+}
+
+fn action(number: i32) -> String {
+    if number == 0 {
+        return "Go to the store and buy some more".to_string();
+    }
+    format!(
+        "Take {pronoun} down and pass it around",
+        pronoun = pronoun(number)
+    )
 }
 
 #[cfg(test)]
