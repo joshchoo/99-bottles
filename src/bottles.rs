@@ -21,16 +21,6 @@ Go to the store and buy some more, 99 bottles of beer on the wall.\n"
 Take it down and pass it around, no more bottles of beer on the wall.\n",
             )
         }
-        2 => {
-            return format!(
-                "{number} {container} of beer on the wall, {number} {container} of beer.
-Take one down and pass it around, {numberMinusOne} {containerMinusOne} of beer on the wall.\n",
-                number = number,
-                container = container(number),
-                numberMinusOne = number - 1,
-                containerMinusOne = container(number - 1),
-            );
-        }
         _ => {
             return format!(
                 "{number} {container} of beer on the wall, {number} {container} of beer.
