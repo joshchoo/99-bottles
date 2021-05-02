@@ -18,9 +18,10 @@ Go to the store and buy some more, 99 bottles of beer on the wall.\n"
         1 => {
             return format!(
                 "{number} {container} of beer on the wall, {number} {container} of beer.
-Take {pronoun} down and pass it around, {quantityMinusOne} bottles of beer on the wall.\n",
+Take {pronoun} down and pass it around, {quantityMinusOne} {containerMinusOne} of beer on the wall.\n",
                 number = number,
                 container = container(number),
+                containerMinusOne = container(number - 1),
                 pronoun = pronoun(number),
                 quantityMinusOne = quantity(number - 1),
             )
