@@ -11,9 +11,11 @@ pub fn verse(number: i32) -> String {
     match number {
         0 => {
             return format!(
-                "{capitalized_quantity} bottles of beer on the wall, no more bottles of beer.
+                "{capitalized_quantity} bottles of beer on the wall, {quantity} {container} of beer.
 Go to the store and buy some more, 99 bottles of beer on the wall.\n",
                 capitalized_quantity = capitalize(&quantity(number)),
+                quantity = quantity(number),
+                container = container(number),
             )
         }
         _ => {
