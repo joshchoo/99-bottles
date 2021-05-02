@@ -31,10 +31,8 @@ Take one down and pass it around, {} bottles of beer on the wall.\n",
 }
 
 pub fn verses(upper: i32, lower: i32) -> String {
-    if upper == 99 {
-        return format!("{}\n{}", verse(99), verse(98));
-    }
-    return format!("{}\n{}\n{}", verse(2), verse(1), verse(0));
+    let range = (lower..=upper).rev();
+    return range.map(|i| verse(i)).collect::<Vec<String>>().join("\n");
 }
 
 #[cfg(test)]
