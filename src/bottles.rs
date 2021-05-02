@@ -1,5 +1,11 @@
 pub fn verse(number: i32) -> String {
     match number {
+        0 => {
+            return format!(
+                "No more bottles of beer on the wall, no more bottles of beer.
+Go to the store and buy some more, 99 bottles of beer on the wall.\n"
+            )
+        }
         1 => {
             return format!(
                 "1 bottle of beer on the wall, 1 bottle of beer.
@@ -54,5 +60,12 @@ Take one down and pass it around, 1 bottle of beer on the wall.\n";
         let expected = "1 bottle of beer on the wall, 1 bottle of beer.
 Take it down and pass it around, no more bottles of beer on the wall.\n";
         assert_eq!(verse(1), expected);
+    }
+
+    #[test]
+    fn test_verse_0_bottles() {
+        let expected = "No more bottles of beer on the wall, no more bottles of beer.
+Go to the store and buy some more, 99 bottles of beer on the wall.\n";
+        assert_eq!(verse(0), expected);
     }
 }
