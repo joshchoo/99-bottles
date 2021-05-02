@@ -18,10 +18,11 @@ Go to the store and buy some more, 99 bottles of beer on the wall.\n"
         1 => {
             return format!(
                 "{number} {container} of beer on the wall, {number} {container} of beer.
-Take {pronoun} down and pass it around, no more bottles of beer on the wall.\n",
+Take {pronoun} down and pass it around, {quantityMinusOne} bottles of beer on the wall.\n",
                 number = number,
                 container = container(number),
                 pronoun = pronoun(number),
+                quantityMinusOne = quantity(number - 1),
             )
         }
         _ => {
@@ -50,6 +51,13 @@ fn pronoun(number: i32) -> String {
         return "it".to_string();
     }
     "one".to_string()
+}
+
+fn quantity(number: i32) -> String {
+    if number == 0 {
+        return "no more".to_string();
+    }
+    number.to_string()
 }
 
 #[cfg(test)]
