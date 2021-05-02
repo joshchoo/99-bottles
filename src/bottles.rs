@@ -1,3 +1,12 @@
+pub fn song() -> String {
+    verses(99, 0)
+}
+
+pub fn verses(upper: i32, lower: i32) -> String {
+    let range = (lower..=upper).rev();
+    range.map(|i| verse(i)).collect::<Vec<String>>().join("\n")
+}
+
 pub fn verse(number: i32) -> String {
     match number {
         0 => {
@@ -28,15 +37,6 @@ Take one down and pass it around, {} bottles of beer on the wall.\n",
             )
         }
     };
-}
-
-pub fn verses(upper: i32, lower: i32) -> String {
-    let range = (lower..=upper).rev();
-    range.map(|i| verse(i)).collect::<Vec<String>>().join("\n")
-}
-
-pub fn song() -> String {
-    verses(99, 0)
 }
 
 #[cfg(test)]
