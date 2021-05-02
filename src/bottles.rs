@@ -12,23 +12,25 @@ pub fn verse(number: i32) -> String {
         0 => {
             return format!(
                 "{capitalized_quantity} {container} of beer on the wall, {quantity} {container} of beer.
-{action}, 99 bottles of beer on the wall.\n",
+{action}, {quantity_successor} {container_successor} of beer on the wall.\n",
                 capitalized_quantity = capitalize(&quantity(number)),
                 quantity = quantity(number),
                 container = container(number),
-                action = action(number)
+                action = action(number),
+                container_successor = container(successor(number)),
+                quantity_successor = quantity(successor(number))
             )
         }
         _ => {
             return format!(
                 "{capitalized_quantity} {container} of beer on the wall, {quantity} {container} of beer.
-{action}, {quantity_minus_one} {container_minus_one} of beer on the wall.\n",
+{action}, {quantity_successor} {container_successor} of beer on the wall.\n",
                 capitalized_quantity = capitalize(&quantity(number)),
                 quantity = quantity(number),
                 container = container(number),
-                container_minus_one = container(number - 1),
-                quantity_minus_one = quantity(number - 1),
-                action = action(number)
+                action = action(number),
+                container_successor = container(successor(number)),
+                quantity_successor = quantity(successor(number))
             )
         }
     };
@@ -71,6 +73,13 @@ fn action(number: i32) -> String {
         "Take {pronoun} down and pass it around",
         pronoun = pronoun(number)
     )
+}
+
+fn successor(number: i32) -> i32 {
+    if number == 0 {
+        return 99;
+    }
+    number - 1
 }
 
 #[cfg(test)]
