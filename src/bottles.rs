@@ -66,6 +66,23 @@ fn successor(number: i32) -> i32 {
     number - 1
 }
 
+struct BottleNumber {
+    number: i32,
+}
+
+impl BottleNumber {
+    fn new(number: i32) -> BottleNumber {
+        BottleNumber { number: number }
+    }
+
+    fn quantity(&self, number: i32) -> String {
+        if number == 0 {
+            return "no more".to_string();
+        }
+        number.to_string()
+    }
+}
+
 #[cfg(test)]
 mod verse_tests {
     use super::*;
