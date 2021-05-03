@@ -1,3 +1,5 @@
+use core::fmt;
+
 pub fn song() -> String {
     verses(99, 0)
 }
@@ -9,17 +11,15 @@ pub fn verses(upper: i32, lower: i32) -> String {
 
 pub fn verse(number: i32) -> String {
     let bottle_number = BottleNumber::new(number);
-    let bottle_number_successor = BottleNumber::new(bottle_number.successor());
+    let next_bottle_number = BottleNumber::new(bottle_number.successor());
 
     format!(
-        "{capitalized_quantity} {container} of beer on the wall, {quantity} {container} of beer.
-{action}, {quantity_successor} {container_successor} of beer on the wall.\n",
-        capitalized_quantity = capitalize(&bottle_number.quantity()),
-        container = bottle_number.container(),
-        quantity = bottle_number.quantity(),
+        "{capitalized_bottle_number} of beer on the wall, {bottle_number} of beer.
+{action}, {next_bottle_number} of beer on the wall.\n",
+        capitalized_bottle_number = capitalize(&bottle_number.to_string()),
         action = bottle_number.action(),
-        quantity_successor = bottle_number_successor.quantity(),
-        container_successor = bottle_number_successor.container(),
+        bottle_number = bottle_number,
+        next_bottle_number = next_bottle_number,
     )
 }
 
@@ -80,6 +80,17 @@ impl BottleNumber {
             return 99;
         }
         self.number - 1
+    }
+}
+
+impl fmt::Display for BottleNumber {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(
+            f,
+            "{quantity} {container}",
+            quantity = self.quantity(),
+            container = self.container()
+        )
     }
 }
 
