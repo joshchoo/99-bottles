@@ -21,21 +21,23 @@ pub fn verse(number: i32) -> String {
 }
 
 fn container(number: i32) -> String {
-    if number == 1 {
-        return "bottle".to_string();
-    }
-    "bottles".to_string()
+    BottleNumber::new(number).container(number)
 }
 
 fn pronoun(number: i32) -> String {
-    if number == 1 {
-        return "it".to_string();
-    }
-    "one".to_string()
+    BottleNumber::new(number).pronoun(number)
 }
 
 fn quantity(number: i32) -> String {
     BottleNumber::new(number).quantity(number)
+}
+
+fn action(number: i32) -> String {
+    BottleNumber::new(number).action(number)
+}
+
+fn successor(number: i32) -> i32 {
+    BottleNumber::new(number).successor(number)
 }
 
 fn capitalize(word: &str) -> String {
@@ -44,23 +46,6 @@ fn capitalize(word: &str) -> String {
         None => return "".to_string(),
         Some(c) => format!("{}{}", c.to_ascii_uppercase(), chars.as_str()),
     }
-}
-
-fn action(number: i32) -> String {
-    if number == 0 {
-        return "Go to the store and buy some more".to_string();
-    }
-    format!(
-        "Take {pronoun} down and pass it around",
-        pronoun = pronoun(number)
-    )
-}
-
-fn successor(number: i32) -> i32 {
-    if number == 0 {
-        return 99;
-    }
-    number - 1
 }
 
 struct BottleNumber {
@@ -77,6 +62,37 @@ impl BottleNumber {
             return "no more".to_string();
         }
         number.to_string()
+    }
+
+    fn container(&self, number: i32) -> String {
+        if number == 1 {
+            return "bottle".to_string();
+        }
+        "bottles".to_string()
+    }
+
+    fn pronoun(&self, number: i32) -> String {
+        if number == 1 {
+            return "it".to_string();
+        }
+        "one".to_string()
+    }
+
+    fn action(&self, number: i32) -> String {
+        if number == 0 {
+            return "Go to the store and buy some more".to_string();
+        }
+        format!(
+            "Take {pronoun} down and pass it around",
+            pronoun = pronoun(number)
+        )
+    }
+
+    fn successor(&self, number: i32) -> i32 {
+        if number == 0 {
+            return 99;
+        }
+        number - 1
     }
 }
 
