@@ -21,23 +21,23 @@ pub fn verse(number: i32) -> String {
 }
 
 fn container(number: i32) -> String {
-    BottleNumber::new(number).container(number)
+    BottleNumber::new(number).container()
 }
 
 fn pronoun(number: i32) -> String {
-    BottleNumber::new(number).pronoun(number)
+    BottleNumber::new(number).pronoun()
 }
 
 fn quantity(number: i32) -> String {
-    BottleNumber::new(number).quantity(number)
+    BottleNumber::new(number).quantity()
 }
 
 fn action(number: i32) -> String {
-    BottleNumber::new(number).action(number)
+    BottleNumber::new(number).action()
 }
 
 fn successor(number: i32) -> i32 {
-    BottleNumber::new(number).successor(number)
+    BottleNumber::new(number).successor()
 }
 
 fn capitalize(word: &str) -> String {
@@ -57,42 +57,42 @@ impl BottleNumber {
         BottleNumber { number: number }
     }
 
-    fn quantity(&self, number: i32) -> String {
-        if number == 0 {
+    fn quantity(&self) -> String {
+        if self.number == 0 {
             return "no more".to_string();
         }
-        number.to_string()
+        self.number.to_string()
     }
 
-    fn container(&self, number: i32) -> String {
-        if number == 1 {
+    fn container(&self) -> String {
+        if self.number == 1 {
             return "bottle".to_string();
         }
         "bottles".to_string()
     }
 
-    fn pronoun(&self, number: i32) -> String {
-        if number == 1 {
+    fn pronoun(&self) -> String {
+        if self.number == 1 {
             return "it".to_string();
         }
         "one".to_string()
     }
 
-    fn action(&self, number: i32) -> String {
-        if number == 0 {
+    fn action(&self) -> String {
+        if self.number == 0 {
             return "Go to the store and buy some more".to_string();
         }
         format!(
             "Take {pronoun} down and pass it around",
-            pronoun = pronoun(number)
+            pronoun = pronoun(self.number)
         )
     }
 
-    fn successor(&self, number: i32) -> i32 {
-        if number == 0 {
+    fn successor(&self) -> i32 {
+        if self.number == 0 {
             return 99;
         }
-        number - 1
+        self.number - 1
     }
 }
 
