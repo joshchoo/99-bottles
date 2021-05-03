@@ -35,10 +35,7 @@ fn pronoun(number: i32) -> String {
 }
 
 fn quantity(number: i32) -> String {
-    if number == 0 {
-        return "no more".to_string();
-    }
-    number.to_string()
+    BottleNumber::new(number).quantity(number)
 }
 
 fn capitalize(word: &str) -> String {
