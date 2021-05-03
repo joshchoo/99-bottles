@@ -8,36 +8,23 @@ pub fn verses(upper: i32, lower: i32) -> String {
 }
 
 pub fn verse(number: i32) -> String {
+    let bottle_number = BottleNumber::new(number);
+    let bottle_number_successor = BottleNumber::new(bottle_number.successor());
+
     format!(
         "{capitalized_quantity} {container} of beer on the wall, {quantity} {container} of beer.
 {action}, {quantity_successor} {container_successor} of beer on the wall.\n",
-        capitalized_quantity = capitalize(&quantity(number)),
-        container = container(number),
-        quantity = quantity(number),
-        action = action(number),
-        quantity_successor = quantity(successor(number)),
-        container_successor = container(successor(number)),
+        capitalized_quantity = capitalize(&bottle_number.quantity()),
+        container = bottle_number.container(),
+        quantity = bottle_number.quantity(),
+        action = bottle_number.action(),
+        quantity_successor = bottle_number_successor.quantity(),
+        container_successor = bottle_number_successor.container(),
     )
-}
-
-fn container(number: i32) -> String {
-    BottleNumber::new(number).container()
 }
 
 fn pronoun(number: i32) -> String {
     BottleNumber::new(number).pronoun()
-}
-
-fn quantity(number: i32) -> String {
-    BottleNumber::new(number).quantity()
-}
-
-fn action(number: i32) -> String {
-    BottleNumber::new(number).action()
-}
-
-fn successor(number: i32) -> i32 {
-    BottleNumber::new(number).successor()
 }
 
 fn capitalize(word: &str) -> String {
