@@ -10,7 +10,7 @@ pub fn verses(upper: i32, lower: i32) -> String {
 }
 
 pub fn verse(number: i32) -> String {
-    let bottle_number = BottleNumber::new(number);
+    let bottle_number = bottle_number_for(number);
     let next_bottle_number = BottleNumber::new(bottle_number.successor());
 
     format!(
@@ -33,6 +33,10 @@ fn capitalize(word: &str) -> String {
         None => return "".to_string(),
         Some(c) => format!("{}{}", c.to_ascii_uppercase(), chars.as_str()),
     }
+}
+
+fn bottle_number_for(number: i32) -> BottleNumber {
+    BottleNumber::new(number)
 }
 
 struct BottleNumber {
