@@ -10,8 +10,9 @@ pub fn verses(upper: i32, lower: i32) -> String {
 }
 
 pub fn verse(number: i32) -> String {
-    let bottle_number = BottleNumber::of(number);
-    let next_bottle_number = BottleNumber::of(bottle_number.successor());
+    let bottle_number = BottleNumber::of(BottleNumberKind::Number(number));
+    let next_bottle_number =
+        BottleNumber::of(BottleNumberKind::BottleNumber(bottle_number.successor()));
 
     format!(
         "{capitalized_bottle_number} of beer on the wall, {bottle_number} of beer.
@@ -35,11 +36,16 @@ trait BottleNumberTrait: fmt::Display {
     fn quantity(&self) -> String;
     fn action(&self) -> String;
     fn container(&self) -> String;
-    fn successor(&self) -> i32;
+    fn successor(&self) -> Box<dyn BottleNumberTrait>;
 }
 
 struct BottleNumber {
     number: i32,
+}
+
+enum BottleNumberKind {
+    Number(i32),
+    BottleNumber(Box<dyn BottleNumberTrait>),
 }
 
 impl BottleNumber {
@@ -47,11 +53,14 @@ impl BottleNumber {
         BottleNumber { number }
     }
 
-    fn of(number: i32) -> Box<dyn BottleNumberTrait> {
+    fn of(number: BottleNumberKind) -> Box<dyn BottleNumberTrait> {
         match number {
-            0 => Box::new(BottleNumberZero::new(number)),
-            1 => Box::new(BottleNumberOne::new(number)),
-            _ => Box::new(BottleNumber::new(number)),
+            BottleNumberKind::BottleNumber(bottle_number) => bottle_number,
+            BottleNumberKind::Number(num) => match num {
+                0 => Box::new(BottleNumberZero::new(num)),
+                1 => Box::new(BottleNumberOne::new(num)),
+                _ => Box::new(BottleNumber::new(num)),
+            },
         }
     }
 
@@ -74,8 +83,8 @@ impl BottleNumber {
         )
     }
 
-    fn successor(&self) -> i32 {
-        self.number - 1
+    fn successor(&self) -> Box<dyn BottleNumberTrait> {
+        BottleNumber::of(BottleNumberKind::Number(self.number - 1))
     }
 }
 
@@ -103,7 +112,7 @@ impl BottleNumberTrait for BottleNumber {
         self.container()
     }
 
-    fn successor(&self) -> i32 {
+    fn successor(&self) -> Box<dyn BottleNumberTrait> {
         self.successor()
     }
 }
@@ -132,8 +141,8 @@ impl BottleNumberZero {
         self.bottle_number.container()
     }
 
-    fn successor(&self) -> i32 {
-        99
+    fn successor(&self) -> Box<dyn BottleNumberTrait> {
+        BottleNumber::of(BottleNumberKind::Number(99))
     }
 }
 
@@ -161,7 +170,7 @@ impl BottleNumberTrait for BottleNumberZero {
         self.container()
     }
 
-    fn successor(&self) -> i32 {
+    fn successor(&self) -> Box<dyn BottleNumberTrait> {
         self.successor()
     }
 }
@@ -196,7 +205,7 @@ impl BottleNumberOne {
         "bottle".to_string()
     }
 
-    fn successor(&self) -> i32 {
+    fn successor(&self) -> Box<dyn BottleNumberTrait> {
         self.bottle_number.successor()
     }
 }
@@ -214,7 +223,7 @@ impl BottleNumberTrait for BottleNumberOne {
         self.container()
     }
 
-    fn successor(&self) -> i32 {
+    fn successor(&self) -> Box<dyn BottleNumberTrait> {
         self.successor()
     }
 }
