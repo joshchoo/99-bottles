@@ -50,6 +50,7 @@ impl BottleNumber {
         match number {
             0 => Box::new(BottleNumberZero::new(number)),
             1 => Box::new(BottleNumberOne::new(number)),
+            6 => Box::new(BottleNumberSix::new(number)),
             _ => Box::new(BottleNumber::new(number)),
         }
     }
@@ -219,6 +220,63 @@ impl BottleNumberTrait for BottleNumberOne {
 }
 
 impl fmt::Display for BottleNumberOne {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(
+            f,
+            "{quantity} {container}",
+            quantity = self.quantity(),
+            container = self.container()
+        )
+    }
+}
+
+struct BottleNumberSix {
+    bottle_number: BottleNumber,
+}
+
+impl BottleNumberSix {
+    fn new(number: i32) -> BottleNumberSix {
+        BottleNumberSix {
+            bottle_number: BottleNumber::new(number),
+        }
+    }
+
+    fn quantity(&self) -> String {
+        '1'.to_string()
+    }
+
+    fn action(&self) -> String {
+        self.bottle_number.action()
+    }
+
+    fn container(&self) -> String {
+        "six-pack".to_string()
+    }
+
+    fn successor(&self) -> Box<dyn BottleNumberTrait> {
+        self.bottle_number.successor()
+    }
+}
+
+impl BottleNumberTrait for BottleNumberSix {
+    fn quantity(&self) -> String {
+        self.quantity()
+    }
+
+    fn action(&self) -> String {
+        self.action()
+    }
+
+    fn container(&self) -> String {
+        self.container()
+    }
+
+    fn successor(&self) -> Box<dyn BottleNumberTrait> {
+        self.successor()
+    }
+}
+
+impl fmt::Display for BottleNumberSix {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(
             f,
