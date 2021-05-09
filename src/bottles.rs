@@ -43,10 +43,11 @@ trait BottleNumberTrait: fmt::Display {
 }
 
 fn bottle_number_for(number: i32) -> Box<dyn BottleNumberTrait> {
-    if number == 0 {
-        return Box::new(BottleNumberZero::new(number));
+    match number {
+        0 => Box::new(BottleNumberZero::new(number)),
+        1 => Box::new(BottleNumberOne::new(number)),
+        _ => Box::new(BottleNumber::new(number)),
     }
-    Box::new(BottleNumber::new(number))
 }
 
 struct BottleNumber {
@@ -200,6 +201,35 @@ impl BottleNumberOne {
 
     fn successor(&self) -> i32 {
         self.bottle_number.successor()
+    }
+}
+
+impl BottleNumberTrait for BottleNumberOne {
+    fn quantity(&self) -> String {
+        self.quantity()
+    }
+
+    fn action(&self) -> String {
+        self.action()
+    }
+
+    fn container(&self) -> String {
+        self.container()
+    }
+
+    fn successor(&self) -> i32 {
+        self.successor()
+    }
+}
+
+impl fmt::Display for BottleNumberOne {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(
+            f,
+            "{quantity} {container}",
+            quantity = self.quantity(),
+            container = self.container()
+        )
     }
 }
 
