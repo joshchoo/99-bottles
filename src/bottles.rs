@@ -6,7 +6,7 @@ pub fn song() -> String {
 
 pub fn verses(upper: i32, lower: i32) -> String {
     let range = (lower..=upper).rev();
-    range.map(|i| verse(i)).collect::<Vec<String>>().join("\n")
+    range.map(verse).collect::<Vec<String>>().join("\n")
 }
 
 pub fn verse(number: i32) -> String {
@@ -25,7 +25,7 @@ pub fn verse(number: i32) -> String {
 fn capitalize(word: &str) -> String {
     let mut chars = word.chars();
     match chars.next() {
-        None => return "".to_string(),
+        None => "".to_string(),
         Some(c) => format!("{}{}", c.to_ascii_uppercase(), chars.as_str()),
     }
 }
