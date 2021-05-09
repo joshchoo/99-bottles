@@ -77,9 +77,6 @@ impl BottleNumber {
     }
 
     fn action(&self) -> String {
-        if self.number == 0 {
-            return "Go to the store and buy some more".to_string();
-        }
         format!(
             "Take {pronoun} down and pass it around",
             pronoun = pronoun(self.number)
@@ -87,9 +84,6 @@ impl BottleNumber {
     }
 
     fn successor(&self) -> i32 {
-        if self.number == 0 {
-            return 99;
-        }
         self.number - 1
     }
 }
@@ -140,7 +134,7 @@ impl BottleNumberZero {
     }
 
     fn action(&self) -> String {
-        self.bottle_number.action()
+        "Go to the store and buy some more".to_string()
     }
 
     fn container(&self) -> String {
@@ -148,7 +142,7 @@ impl BottleNumberZero {
     }
 
     fn successor(&self) -> i32 {
-        self.bottle_number.successor()
+        99
     }
 }
 
