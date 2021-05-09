@@ -59,9 +59,6 @@ impl BottleNumber {
     }
 
     fn quantity(&self) -> String {
-        if self.number == 0 {
-            return "no more".to_string();
-        }
         self.number.to_string()
     }
 
@@ -139,7 +136,7 @@ impl BottleNumberZero {
     }
 
     fn quantity(&self) -> String {
-        self.bottle_number.quantity()
+        "no more".to_string()
     }
 
     fn action(&self) -> String {
