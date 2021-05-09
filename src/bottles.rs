@@ -64,9 +64,6 @@ impl BottleNumber {
     }
 
     fn container(&self) -> String {
-        if self.number == 1 {
-            return "bottle".to_string();
-        }
         "bottles".to_string()
     }
 
@@ -196,7 +193,7 @@ impl BottleNumberOne {
     }
 
     fn container(&self) -> String {
-        self.bottle_number.container()
+        "bottle".to_string()
     }
 
     fn successor(&self) -> i32 {
