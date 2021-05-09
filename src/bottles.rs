@@ -175,6 +175,34 @@ impl BottleNumberTrait for BottleNumberZero {
     }
 }
 
+struct BottleNumberOne {
+    bottle_number: BottleNumber,
+}
+
+impl BottleNumberOne {
+    fn new(number: i32) -> BottleNumberOne {
+        BottleNumberOne {
+            bottle_number: BottleNumber::new(number),
+        }
+    }
+
+    fn quantity(&self) -> String {
+        self.bottle_number.quantity()
+    }
+
+    fn action(&self) -> String {
+        self.bottle_number.action()
+    }
+
+    fn container(&self) -> String {
+        self.bottle_number.container()
+    }
+
+    fn successor(&self) -> i32 {
+        self.bottle_number.successor()
+    }
+}
+
 #[cfg(test)]
 mod verse_tests {
     use super::*;
