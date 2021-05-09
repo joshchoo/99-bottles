@@ -11,7 +11,6 @@ pub fn verses(upper: i32, lower: i32) -> String {
 
 pub fn verse(number: i32) -> String {
     let bottle_number = BottleNumber::of(number);
-    let next_bottle_number = bottle_number.successor();
 
     format!(
         "{capitalized_bottle_number} of beer on the wall, {bottle_number} of beer.
@@ -19,7 +18,7 @@ pub fn verse(number: i32) -> String {
         capitalized_bottle_number = capitalize(&bottle_number.to_string()),
         action = bottle_number.action(),
         bottle_number = bottle_number,
-        next_bottle_number = next_bottle_number,
+        next_bottle_number = bottle_number.successor(),
     )
 }
 
