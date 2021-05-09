@@ -10,8 +10,8 @@ pub fn verses(upper: i32, lower: i32) -> String {
 }
 
 pub fn verse(number: i32) -> String {
-    let bottle_number = bottle_number_for(number);
-    let next_bottle_number = bottle_number_for(bottle_number.successor());
+    let bottle_number = BottleNumber::of(number);
+    let next_bottle_number = BottleNumber::of(bottle_number.successor());
 
     format!(
         "{capitalized_bottle_number} of beer on the wall, {bottle_number} of beer.
@@ -38,14 +38,6 @@ trait BottleNumberTrait: fmt::Display {
     fn successor(&self) -> i32;
 }
 
-fn bottle_number_for(number: i32) -> Box<dyn BottleNumberTrait> {
-    match number {
-        0 => Box::new(BottleNumberZero::new(number)),
-        1 => Box::new(BottleNumberOne::new(number)),
-        _ => Box::new(BottleNumber::new(number)),
-    }
-}
-
 struct BottleNumber {
     number: i32,
 }
@@ -53,6 +45,14 @@ struct BottleNumber {
 impl BottleNumber {
     fn new(number: i32) -> BottleNumber {
         BottleNumber { number }
+    }
+
+    fn of(number: i32) -> Box<dyn BottleNumberTrait> {
+        match number {
+            0 => Box::new(BottleNumberZero::new(number)),
+            1 => Box::new(BottleNumberOne::new(number)),
+            _ => Box::new(BottleNumber::new(number)),
+        }
     }
 
     fn quantity(&self) -> String {
