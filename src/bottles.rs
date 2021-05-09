@@ -68,9 +68,6 @@ impl BottleNumber {
     }
 
     fn pronoun(&self) -> String {
-        if self.number == 1 {
-            return "it".to_string();
-        }
         "one".to_string()
     }
 
@@ -189,7 +186,14 @@ impl BottleNumberOne {
     }
 
     fn action(&self) -> String {
-        self.bottle_number.action()
+        format!(
+            "Take {pronoun} down and pass it around",
+            pronoun = self.pronoun()
+        )
+    }
+
+    fn pronoun(&self) -> String {
+        "it".to_string()
     }
 
     fn container(&self) -> String {
