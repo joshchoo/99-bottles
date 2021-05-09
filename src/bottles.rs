@@ -11,8 +11,7 @@ pub fn verses(upper: i32, lower: i32) -> String {
 
 pub fn verse(number: i32) -> String {
     let bottle_number = BottleNumber::of(BottleNumberKind::Number(number));
-    let next_bottle_number =
-        BottleNumber::of(BottleNumberKind::BottleNumber(bottle_number.successor()));
+    let next_bottle_number = bottle_number.successor();
 
     format!(
         "{capitalized_bottle_number} of beer on the wall, {bottle_number} of beer.
@@ -45,7 +44,6 @@ struct BottleNumber {
 
 enum BottleNumberKind {
     Number(i32),
-    BottleNumber(Box<dyn BottleNumberTrait>),
 }
 
 impl BottleNumber {
@@ -55,7 +53,6 @@ impl BottleNumber {
 
     fn of(number: BottleNumberKind) -> Box<dyn BottleNumberTrait> {
         match number {
-            BottleNumberKind::BottleNumber(bottle_number) => bottle_number,
             BottleNumberKind::Number(num) => match num {
                 0 => Box::new(BottleNumberZero::new(num)),
                 1 => Box::new(BottleNumberOne::new(num)),
