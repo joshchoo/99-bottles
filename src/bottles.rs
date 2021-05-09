@@ -10,7 +10,7 @@ pub fn verses(upper: i32, lower: i32) -> String {
 }
 
 pub fn verse(number: i32) -> String {
-    let bottle_number = BottleNumber::of(BottleNumberKind::Number(number));
+    let bottle_number = BottleNumber::of(number);
     let next_bottle_number = bottle_number.successor();
 
     format!(
@@ -42,22 +42,16 @@ struct BottleNumber {
     number: i32,
 }
 
-enum BottleNumberKind {
-    Number(i32),
-}
-
 impl BottleNumber {
     fn new(number: i32) -> BottleNumber {
         BottleNumber { number }
     }
 
-    fn of(number: BottleNumberKind) -> Box<dyn BottleNumberTrait> {
+    fn of(number: i32) -> Box<dyn BottleNumberTrait> {
         match number {
-            BottleNumberKind::Number(num) => match num {
-                0 => Box::new(BottleNumberZero::new(num)),
-                1 => Box::new(BottleNumberOne::new(num)),
-                _ => Box::new(BottleNumber::new(num)),
-            },
+            0 => Box::new(BottleNumberZero::new(number)),
+            1 => Box::new(BottleNumberOne::new(number)),
+            _ => Box::new(BottleNumber::new(number)),
         }
     }
 
@@ -81,7 +75,7 @@ impl BottleNumber {
     }
 
     fn successor(&self) -> Box<dyn BottleNumberTrait> {
-        BottleNumber::of(BottleNumberKind::Number(self.number - 1))
+        BottleNumber::of(self.number - 1)
     }
 }
 
@@ -139,7 +133,7 @@ impl BottleNumberZero {
     }
 
     fn successor(&self) -> Box<dyn BottleNumberTrait> {
-        BottleNumber::of(BottleNumberKind::Number(99))
+        BottleNumber::of(99)
     }
 }
 
