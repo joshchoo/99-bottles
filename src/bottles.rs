@@ -11,7 +11,7 @@ pub fn verses(upper: i32, lower: i32) -> String {
 
 pub fn verse(number: i32) -> String {
     let bottle_number = bottle_number_for(number);
-    let next_bottle_number = BottleNumber::new(bottle_number.successor());
+    let next_bottle_number = bottle_number_for(bottle_number.successor());
 
     format!(
         "{capitalized_bottle_number} of beer on the wall, {bottle_number} of beer.
@@ -42,8 +42,11 @@ trait BottleNumberTrait: fmt::Display {
     fn successor(&self) -> i32;
 }
 
-fn bottle_number_for(number: i32) -> BottleNumber {
-    BottleNumber::new(number)
+fn bottle_number_for(number: i32) -> Box<dyn BottleNumberTrait> {
+    if number == 0 {
+        return Box::new(BottleNumberZero::new(number));
+    }
+    Box::new(BottleNumber::new(number))
 }
 
 struct BottleNumber {
@@ -52,7 +55,7 @@ struct BottleNumber {
 
 impl BottleNumber {
     fn new(number: i32) -> BottleNumber {
-        BottleNumber { number: number }
+        BottleNumber { number }
     }
 
     fn quantity(&self) -> String {
@@ -102,6 +105,82 @@ impl fmt::Display for BottleNumber {
             quantity = self.quantity(),
             container = self.container()
         )
+    }
+}
+
+impl BottleNumberTrait for BottleNumber {
+    fn quantity(&self) -> String {
+        self.quantity()
+    }
+
+    fn action(&self) -> String {
+        self.action()
+    }
+
+    fn container(&self) -> String {
+        self.container()
+    }
+
+    fn successor(&self) -> i32 {
+        self.successor()
+    }
+}
+
+struct BottleNumberZero {
+    bottle_number: BottleNumber,
+}
+
+impl BottleNumberZero {
+    fn new(number: i32) -> BottleNumberZero {
+        BottleNumberZero {
+            // Use composition instead of inheritance to re-use BottleNumber's behaviours
+            bottle_number: BottleNumber::new(number),
+        }
+    }
+
+    fn quantity(&self) -> String {
+        self.bottle_number.quantity()
+    }
+
+    fn action(&self) -> String {
+        self.bottle_number.action()
+    }
+
+    fn container(&self) -> String {
+        self.bottle_number.container()
+    }
+
+    fn successor(&self) -> i32 {
+        self.bottle_number.successor()
+    }
+}
+
+impl fmt::Display for BottleNumberZero {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(
+            f,
+            "{quantity} {container}",
+            quantity = self.quantity(),
+            container = self.container()
+        )
+    }
+}
+
+impl BottleNumberTrait for BottleNumberZero {
+    fn quantity(&self) -> String {
+        self.quantity()
+    }
+
+    fn action(&self) -> String {
+        self.action()
+    }
+
+    fn container(&self) -> String {
+        self.container()
+    }
+
+    fn successor(&self) -> i32 {
+        self.successor()
     }
 }
 
