@@ -23,10 +23,6 @@ pub fn verse(number: i32) -> String {
     )
 }
 
-fn pronoun(number: i32) -> String {
-    BottleNumber::new(number).pronoun()
-}
-
 fn capitalize(word: &str) -> String {
     let mut chars = word.chars();
     match chars.next() {
@@ -74,7 +70,7 @@ impl BottleNumber {
     fn action(&self) -> String {
         format!(
             "Take {pronoun} down and pass it around",
-            pronoun = pronoun(self.number)
+            pronoun = self.pronoun()
         )
     }
 
