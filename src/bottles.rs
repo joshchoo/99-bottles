@@ -35,6 +35,13 @@ fn capitalize(word: &str) -> String {
     }
 }
 
+trait BottleNumberTrait: fmt::Display {
+    fn quantity(&self) -> String;
+    fn action(&self) -> String;
+    fn container(&self) -> String;
+    fn successor(&self) -> i32;
+}
+
 fn bottle_number_for(number: i32) -> BottleNumber {
     BottleNumber::new(number)
 }
