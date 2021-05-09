@@ -30,11 +30,22 @@ fn capitalize(word: &str) -> String {
     }
 }
 
-trait BottleNumberTrait: fmt::Display {
+trait BottleNumberTrait {
     fn quantity(&self) -> String;
     fn action(&self) -> String;
     fn container(&self) -> String;
     fn successor(&self) -> Box<dyn BottleNumberTrait>;
+}
+
+impl fmt::Display for Box<dyn BottleNumberTrait> {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(
+            f,
+            "{quantity} {container}",
+            quantity = self.quantity(),
+            container = self.container()
+        )
+    }
 }
 
 struct BottleNumber {
@@ -76,17 +87,6 @@ impl BottleNumber {
 
     fn successor(&self) -> Box<dyn BottleNumberTrait> {
         BottleNumber::of(self.number - 1)
-    }
-}
-
-impl fmt::Display for BottleNumber {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(
-            f,
-            "{quantity} {container}",
-            quantity = self.quantity(),
-            container = self.container()
-        )
     }
 }
 
@@ -134,17 +134,6 @@ impl BottleNumberZero {
 
     fn successor(&self) -> Box<dyn BottleNumberTrait> {
         BottleNumber::of(99)
-    }
-}
-
-impl fmt::Display for BottleNumberZero {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(
-            f,
-            "{quantity} {container}",
-            quantity = self.quantity(),
-            container = self.container()
-        )
     }
 }
 
@@ -219,17 +208,6 @@ impl BottleNumberTrait for BottleNumberOne {
     }
 }
 
-impl fmt::Display for BottleNumberOne {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(
-            f,
-            "{quantity} {container}",
-            quantity = self.quantity(),
-            container = self.container()
-        )
-    }
-}
-
 struct BottleNumberSix {
     bottle_number: BottleNumber,
 }
@@ -273,17 +251,6 @@ impl BottleNumberTrait for BottleNumberSix {
 
     fn successor(&self) -> Box<dyn BottleNumberTrait> {
         self.successor()
-    }
-}
-
-impl fmt::Display for BottleNumberSix {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(
-            f,
-            "{quantity} {container}",
-            quantity = self.quantity(),
-            container = self.container()
-        )
     }
 }
 
