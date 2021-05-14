@@ -1,16 +1,28 @@
 use core::fmt;
 
-pub fn song() -> String {
-    verses(99, 0)
-}
+#[derive(Default)]
+pub struct Bottle;
 
-pub fn verses(upper: i32, lower: i32) -> String {
-    let range = (lower..=upper).rev();
-    range.map(verse).collect::<Vec<String>>().join("\n")
-}
+impl Bottle {
+    pub fn new() -> Bottle {
+        Bottle
+    }
 
-pub fn verse(number: i32) -> String {
-    BottleVerse::new(number).lyrics()
+    pub fn song(&self) -> String {
+        self.verses(99, 0)
+    }
+
+    pub fn verses(&self, upper: i32, lower: i32) -> String {
+        let range = (lower..=upper).rev();
+        range
+            .map(|num| self.verse(num))
+            .collect::<Vec<String>>()
+            .join("\n")
+    }
+
+    pub fn verse(&self, number: i32) -> String {
+        BottleVerse::new(number).lyrics()
+    }
 }
 
 fn capitalize(word: &str) -> String {
@@ -276,35 +288,35 @@ mod verse_tests {
     fn test_verse_99_bottles() {
         let expected = "99 bottles of beer on the wall, 99 bottles of beer.
 Take one down and pass it around, 98 bottles of beer on the wall.\n";
-        assert_eq!(verse(99), expected);
+        assert_eq!(Bottle::new().verse(99), expected);
     }
 
     #[test]
     fn test_verse_3_bottles() {
         let expected = "3 bottles of beer on the wall, 3 bottles of beer.
 Take one down and pass it around, 2 bottles of beer on the wall.\n";
-        assert_eq!(verse(3), expected);
+        assert_eq!(Bottle::new().verse(3), expected);
     }
 
     #[test]
     fn test_verse_2_bottles() {
         let expected = "2 bottles of beer on the wall, 2 bottles of beer.
 Take one down and pass it around, 1 bottle of beer on the wall.\n";
-        assert_eq!(verse(2), expected);
+        assert_eq!(Bottle::new().verse(2), expected);
     }
 
     #[test]
     fn test_verse_1_bottle() {
         let expected = "1 bottle of beer on the wall, 1 bottle of beer.
 Take it down and pass it around, no more bottles of beer on the wall.\n";
-        assert_eq!(verse(1), expected);
+        assert_eq!(Bottle::new().verse(1), expected);
     }
 
     #[test]
     fn test_verse_0_bottles() {
         let expected = "No more bottles of beer on the wall, no more bottles of beer.
 Go to the store and buy some more, 99 bottles of beer on the wall.\n";
-        assert_eq!(verse(0), expected);
+        assert_eq!(Bottle::new().verse(0), expected);
     }
 }
 
@@ -320,7 +332,7 @@ Take one down and pass it around, 98 bottles of beer on the wall.
 98 bottles of beer on the wall, 98 bottles of beer.
 Take one down and pass it around, 97 bottles of beer on the wall.
 ";
-        assert_eq!(verses(99, 98), expected);
+        assert_eq!(Bottle::new().verses(99, 98), expected);
     }
 
     #[test]
@@ -334,7 +346,7 @@ Take it down and pass it around, no more bottles of beer on the wall.
 No more bottles of beer on the wall, no more bottles of beer.
 Go to the store and buy some more, 99 bottles of beer on the wall.
 ";
-        assert_eq!(verses(2, 0), expected);
+        assert_eq!(Bottle::new().verses(2, 0), expected);
     }
 }
 
@@ -645,6 +657,6 @@ No more bottles of beer on the wall, no more bottles of beer.
 Go to the store and buy some more, 99 bottles of beer on the wall.
 ";
 
-        assert_eq!(song(), expected);
+        assert_eq!(Bottle::new().song(), expected);
     }
 }

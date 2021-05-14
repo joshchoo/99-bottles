@@ -1,1 +1,2 @@
-pub mod bottles;
+mod bottles;
+pub use crate::bottles::*;
