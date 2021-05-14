@@ -4,14 +4,6 @@ pub trait VerseTrait {
     fn lyrics(&self, number: i32) -> String;
 }
 
-struct BottleVerseFactory;
-
-impl VerseTrait for BottleVerseFactory {
-    fn lyrics(&self, number: i32) -> String {
-        BottleVerse::new(BottleNumber::of(number)).lyrics()
-    }
-}
-
 type VerseTemplate = Box<dyn VerseTrait>;
 
 pub struct Bottle {
@@ -278,25 +270,33 @@ impl BottleNumberTrait for BottleNumberSix {
     }
 }
 
+struct BottleVerseFactory;
+
+impl VerseTrait for BottleVerseFactory {
+    fn lyrics(&self, number: i32) -> String {
+        BottleVerse::new(BottleNumber::of(number)).lyrics()
+    }
+}
+
 struct BottleVerse {
-    number: Box<dyn BottleNumberTrait>,
+    bottle_number: Box<dyn BottleNumberTrait>,
 }
 
 impl BottleVerse {
     fn new(number: Box<dyn BottleNumberTrait>) -> Self {
-        BottleVerse { number }
+        BottleVerse {
+            bottle_number: number,
+        }
     }
 
     fn lyrics(&self) -> String {
-        let bottle_number = &self.number;
-
         format!(
             "{capitalized_bottle_number} of beer on the wall, {bottle_number} of beer.
 {action}, {next_bottle_number} of beer on the wall.\n",
-            capitalized_bottle_number = capitalize(&bottle_number.to_string()),
-            action = bottle_number.action(),
-            bottle_number = bottle_number,
-            next_bottle_number = bottle_number.successor(),
+            capitalized_bottle_number = capitalize(&self.bottle_number.to_string()),
+            action = self.bottle_number.action(),
+            bottle_number = self.bottle_number,
+            next_bottle_number = self.bottle_number.successor(),
         )
     }
 }
