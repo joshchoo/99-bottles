@@ -73,7 +73,7 @@ struct BottleNumber {
 }
 
 impl BottleNumber {
-    fn new(number: i32) -> BottleNumber {
+    fn new(number: i32) -> Self {
         BottleNumber { number }
     }
 
@@ -133,7 +133,7 @@ struct BottleNumberZero {
 }
 
 impl BottleNumberZero {
-    fn new(number: i32) -> BottleNumberZero {
+    fn new(number: i32) -> Self {
         BottleNumberZero {
             // Use composition instead of inheritance to re-use BottleNumber's behaviours
             bottle_number: BottleNumber::new(number),
@@ -180,7 +180,7 @@ struct BottleNumberOne {
 }
 
 impl BottleNumberOne {
-    fn new(number: i32) -> BottleNumberOne {
+    fn new(number: i32) -> Self {
         BottleNumberOne {
             bottle_number: BottleNumber::new(number),
         }
@@ -233,7 +233,7 @@ struct BottleNumberSix {
 }
 
 impl BottleNumberSix {
-    fn new(number: i32) -> BottleNumberSix {
+    fn new(number: i32) -> Self {
         BottleNumberSix {
             bottle_number: BottleNumber::new(number),
         }
@@ -279,7 +279,7 @@ struct BottleVerse {
 }
 
 impl BottleVerse {
-    fn new(number: i32) -> BottleVerse {
+    fn new(number: i32) -> Self {
         BottleVerse { number }
     }
 }
