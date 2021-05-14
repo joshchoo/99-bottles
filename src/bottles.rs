@@ -1,11 +1,28 @@
 use core::fmt;
 
-#[derive(Default)]
-pub struct Bottle;
+pub trait VerseTrait {
+    fn lyrics(&self) -> String;
+}
+
+type VerseTemplate = fn(number: i32) -> Box<dyn VerseTrait>;
+
+pub fn bottle_verse_template(number: i32) -> Box<dyn VerseTrait> {
+    Box::new(BottleVerse::new(number))
+}
+
+pub struct Bottle {
+    verse_template: VerseTemplate,
+}
+
+impl Default for Bottle {
+    fn default() -> Self {
+        Self::new(bottle_verse_template)
+    }
+}
 
 impl Bottle {
-    pub fn new() -> Bottle {
-        Bottle
+    pub fn new(verse_template: VerseTemplate) -> Self {
+        Bottle { verse_template }
     }
 
     pub fn song(&self) -> String {
@@ -21,7 +38,7 @@ impl Bottle {
     }
 
     pub fn verse(&self, number: i32) -> String {
-        BottleVerse::new(number).lyrics()
+        (self.verse_template)(number).lyrics()
     }
 }
 
@@ -265,7 +282,9 @@ impl BottleVerse {
     fn new(number: i32) -> BottleVerse {
         BottleVerse { number }
     }
+}
 
+impl VerseTrait for BottleVerse {
     fn lyrics(&self) -> String {
         let bottle_number = BottleNumber::of(self.number);
 
@@ -288,35 +307,35 @@ mod verse_tests {
     fn test_verse_99_bottles() {
         let expected = "99 bottles of beer on the wall, 99 bottles of beer.
 Take one down and pass it around, 98 bottles of beer on the wall.\n";
-        assert_eq!(Bottle::new().verse(99), expected);
+        assert_eq!(Bottle::new(bottle_verse_template).verse(99), expected);
     }
 
     #[test]
     fn test_verse_3_bottles() {
         let expected = "3 bottles of beer on the wall, 3 bottles of beer.
 Take one down and pass it around, 2 bottles of beer on the wall.\n";
-        assert_eq!(Bottle::new().verse(3), expected);
+        assert_eq!(Bottle::new(bottle_verse_template).verse(3), expected);
     }
 
     #[test]
     fn test_verse_2_bottles() {
         let expected = "2 bottles of beer on the wall, 2 bottles of beer.
 Take one down and pass it around, 1 bottle of beer on the wall.\n";
-        assert_eq!(Bottle::new().verse(2), expected);
+        assert_eq!(Bottle::new(bottle_verse_template).verse(2), expected);
     }
 
     #[test]
     fn test_verse_1_bottle() {
         let expected = "1 bottle of beer on the wall, 1 bottle of beer.
 Take it down and pass it around, no more bottles of beer on the wall.\n";
-        assert_eq!(Bottle::new().verse(1), expected);
+        assert_eq!(Bottle::new(bottle_verse_template).verse(1), expected);
     }
 
     #[test]
     fn test_verse_0_bottles() {
         let expected = "No more bottles of beer on the wall, no more bottles of beer.
 Go to the store and buy some more, 99 bottles of beer on the wall.\n";
-        assert_eq!(Bottle::new().verse(0), expected);
+        assert_eq!(Bottle::new(bottle_verse_template).verse(0), expected);
     }
 }
 
@@ -332,7 +351,7 @@ Take one down and pass it around, 98 bottles of beer on the wall.
 98 bottles of beer on the wall, 98 bottles of beer.
 Take one down and pass it around, 97 bottles of beer on the wall.
 ";
-        assert_eq!(Bottle::new().verses(99, 98), expected);
+        assert_eq!(Bottle::new(bottle_verse_template).verses(99, 98), expected);
     }
 
     #[test]
@@ -346,7 +365,7 @@ Take it down and pass it around, no more bottles of beer on the wall.
 No more bottles of beer on the wall, no more bottles of beer.
 Go to the store and buy some more, 99 bottles of beer on the wall.
 ";
-        assert_eq!(Bottle::new().verses(2, 0), expected);
+        assert_eq!(Bottle::new(bottle_verse_template).verses(2, 0), expected);
     }
 }
 
@@ -657,6 +676,6 @@ No more bottles of beer on the wall, no more bottles of beer.
 Go to the store and buy some more, 99 bottles of beer on the wall.
 ";
 
-        assert_eq!(Bottle::new().song(), expected);
+        assert_eq!(Bottle::new(bottle_verse_template).song(), expected);
     }
 }
