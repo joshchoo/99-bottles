@@ -1,5 +1,5 @@
-use bottles::{bottle_verse_template, Bottle};
+use bottles::Bottle;
 
 fn main() {
-    println!("{}", Bottle::new(bottle_verse_template).song());
+    println!("{}", Bottle::default().song());
 }
