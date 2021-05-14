@@ -1,6 +1,9 @@
 use core::fmt;
 
 pub trait VerseTrait {
+    fn lyrics_for_verse(number: i32) -> String
+    where
+        Self: Sized;
     fn lyrics(&self) -> String;
 }
 
@@ -285,6 +288,13 @@ impl BottleVerse {
 }
 
 impl VerseTrait for BottleVerse {
+    fn lyrics_for_verse(number: i32) -> String
+    where
+        Self: Sized,
+    {
+        BottleVerse::new(number).lyrics()
+    }
+
     fn lyrics(&self) -> String {
         let bottle_number = BottleNumber::of(self.number);
 
