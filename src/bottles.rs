@@ -254,6 +254,29 @@ impl BottleNumberTrait for BottleNumberSix {
     }
 }
 
+struct BottleVerse {
+    number: i32,
+}
+
+impl BottleVerse {
+    fn new(number: i32) -> BottleVerse {
+        BottleVerse { number }
+    }
+
+    fn verse(&self, number: i32) -> String {
+        let bottle_number = BottleNumber::of(number);
+
+        format!(
+            "{capitalized_bottle_number} of beer on the wall, {bottle_number} of beer.
+{action}, {next_bottle_number} of beer on the wall.\n",
+            capitalized_bottle_number = capitalize(&bottle_number.to_string()),
+            action = bottle_number.action(),
+            bottle_number = bottle_number,
+            next_bottle_number = bottle_number.successor(),
+        )
+    }
+}
+
 #[cfg(test)]
 mod verse_tests {
     use super::*;
