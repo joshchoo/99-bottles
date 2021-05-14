@@ -8,7 +8,7 @@ struct BottleVerseFactory;
 
 impl VerseTrait for BottleVerseFactory {
     fn lyrics(&self, number: i32) -> String {
-        BottleVerse::new(number).lyrics()
+        BottleVerse::new(BottleNumber::of(number)).lyrics()
     }
 }
 
@@ -279,16 +279,16 @@ impl BottleNumberTrait for BottleNumberSix {
 }
 
 struct BottleVerse {
-    number: i32,
+    number: Box<dyn BottleNumberTrait>,
 }
 
 impl BottleVerse {
-    fn new(number: i32) -> Self {
+    fn new(number: Box<dyn BottleNumberTrait>) -> Self {
         BottleVerse { number }
     }
 
     fn lyrics(&self) -> String {
-        let bottle_number = BottleNumber::of(self.number);
+        let bottle_number = &self.number;
 
         format!(
             "{capitalized_bottle_number} of beer on the wall, {bottle_number} of beer.
