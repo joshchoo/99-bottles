@@ -9,21 +9,27 @@ type VerseTemplate = Box<dyn VerseTrait>;
 
 pub struct CountdownSong {
     verse_template: VerseTemplate,
+    max: i32,
+    min: i32,
 }
 
 impl Default for CountdownSong {
     fn default() -> Self {
-        Self::new(Box::new(BottleVerseFactory))
+        Self::new(Box::new(BottleVerseFactory), 99, 0)
     }
 }
 
 impl CountdownSong {
-    pub fn new(verse_template: VerseTemplate) -> Self {
-        CountdownSong { verse_template }
+    pub fn new(verse_template: VerseTemplate, max: i32, min: i32) -> Self {
+        CountdownSong {
+            verse_template,
+            max,
+            min,
+        }
     }
 
     pub fn song(&self) -> String {
-        self.verses(99, 0)
+        self.verses(self.max, self.min)
     }
 
     pub fn verses(&self, upper: i32, lower: i32) -> String {
@@ -335,7 +341,10 @@ mod countdown_song {
     fn verse() {
         let expected = "This is verse 500.\n";
 
-        assert_eq!(CountdownSong::new(Box::new(VerseFake)).verse(500), expected);
+        assert_eq!(
+            CountdownSong::new(Box::new(VerseFake), 99, 0).verse(500),
+            expected
+        );
     }
 
     #[test]
@@ -348,7 +357,7 @@ This is verse 97.
 ";
 
         assert_eq!(
-            CountdownSong::new(Box::new(VerseFake)).verses(99, 97),
+            CountdownSong::new(Box::new(VerseFake), 99, 0).verses(99, 97),
             expected
         );
     }
