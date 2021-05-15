@@ -320,32 +320,37 @@ impl BottleVerse {
 }
 
 #[cfg(test)]
-mod verses {
+mod countdown_song {
     use super::*;
 
-    #[test]
-    fn verses_99_to_98() {
-        let expected = "99 bottles of beer on the wall, 99 bottles of beer.
-Take one down and pass it around, 98 bottles of beer on the wall.
+    struct VerseFake;
 
-98 bottles of beer on the wall, 98 bottles of beer.
-Take one down and pass it around, 97 bottles of beer on the wall.
-";
-        assert_eq!(CountdownSong::default().verses(99, 98), expected);
+    impl VerseTrait for VerseFake {
+        fn lyrics(&self, number: i32) -> String {
+            format!("This is verse {number}.\n", number = number)
+        }
     }
 
     #[test]
-    fn verses_2_to_0() {
-        let expected = "2 bottles of beer on the wall, 2 bottles of beer.
-Take one down and pass it around, 1 bottle of beer on the wall.
+    fn verse() {
+        let expected = "This is verse 500.\n";
 
-1 bottle of beer on the wall, 1 bottle of beer.
-Take it down and pass it around, no more bottles of beer on the wall.
+        assert_eq!(CountdownSong::new(Box::new(VerseFake)).verse(500), expected);
+    }
 
-No more bottles of beer on the wall, no more bottles of beer.
-Go to the store and buy some more, 99 bottles of beer on the wall.
+    #[test]
+    fn verses() {
+        let expected = "This is verse 99.
+
+This is verse 98.
+
+This is verse 97.
 ";
-        assert_eq!(CountdownSong::default().verses(2, 0), expected);
+
+        assert_eq!(
+            CountdownSong::new(Box::new(VerseFake)).verses(99, 97),
+            expected
+        );
     }
 }
 
