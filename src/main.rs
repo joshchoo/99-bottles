@@ -1,5 +1,8 @@
-use bottles::CountdownSong;
+use bottles::{BottleVerseFactory, CountdownSong};
 
 fn main() {
-    println!("{}", CountdownSong::default().song());
+    println!(
+        "{}",
+        CountdownSong::new(Box::new(BottleVerseFactory), 99, 0).song()
+    );
 }

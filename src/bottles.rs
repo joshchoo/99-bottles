@@ -13,12 +13,6 @@ pub struct CountdownSong {
     min: i32,
 }
 
-impl Default for CountdownSong {
-    fn default() -> Self {
-        Self::new(Box::new(BottleVerseFactory), 99, 0)
-    }
-}
-
 impl CountdownSong {
     pub fn new(verse_template: VerseTemplate, max: i32, min: i32) -> Self {
         CountdownSong {
@@ -294,7 +288,7 @@ impl BottleNumberTrait for BottleNumberSix {
     }
 }
 
-struct BottleVerseFactory;
+pub struct BottleVerseFactory;
 
 impl VerseTrait for BottleVerseFactory {
     fn lyrics(&self, number: i32) -> String {
