@@ -301,10 +301,8 @@ struct BottleVerse {
 }
 
 impl BottleVerse {
-    fn new(number: Box<dyn BottleNumberTrait>) -> Self {
-        BottleVerse {
-            bottle_number: number,
-        }
+    fn new(bottle_number: Box<dyn BottleNumberTrait>) -> Self {
+        BottleVerse { bottle_number }
     }
 
     fn lyrics(&self) -> String {
