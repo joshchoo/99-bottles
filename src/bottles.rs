@@ -320,11 +320,11 @@ impl BottleVerse {
 }
 
 #[cfg(test)]
-mod verses_tests {
+mod verses {
     use super::*;
 
     #[test]
-    fn test_verses_99_to_98() {
+    fn verses_99_to_98() {
         let expected = "99 bottles of beer on the wall, 99 bottles of beer.
 Take one down and pass it around, 98 bottles of beer on the wall.
 
@@ -335,7 +335,7 @@ Take one down and pass it around, 97 bottles of beer on the wall.
     }
 
     #[test]
-    fn test_verses_2_to_0() {
+    fn verses_2_to_0() {
         let expected = "2 bottles of beer on the wall, 2 bottles of beer.
 Take one down and pass it around, 1 bottle of beer on the wall.
 
@@ -350,11 +350,11 @@ Go to the store and buy some more, 99 bottles of beer on the wall.
 }
 
 #[cfg(test)]
-mod song_tests {
+mod song {
     use super::*;
 
     #[test]
-    fn test_entire_song() {
+    fn entire_song() {
         let expected = "99 bottles of beer on the wall, 99 bottles of beer.
 Take one down and pass it around, 98 bottles of beer on the wall.
 
@@ -665,15 +665,15 @@ pub fn type_of<T>(_: T) -> &'static str {
 }
 
 #[cfg(test)]
-mod bottle_number_tests {
+mod bottle_number {
     use super::*;
 
-    mod bottle_number_of {
+    mod of {
         use super::*;
         use std::any::TypeId;
 
         #[test]
-        fn test_returns_correct_struct_type() {
+        fn returns_correct_struct_type() {
             {
                 let res = BottleNumber::of(0);
                 let actual_id = (&*res.as_any()).type_id();
@@ -703,42 +703,56 @@ mod bottle_number_tests {
 }
 
 #[cfg(test)]
-mod bottle_verse_tests {
+mod bottle_verse {
     use super::*;
 
-    mod bottle_verse_lyrics {
+    mod lyrics {
         use super::*;
 
         #[test]
-        fn test_verse_99_bottles() {
+        fn verse_general_rule_upper_bound() {
             let expected = "99 bottles of beer on the wall, 99 bottles of beer.
 Take one down and pass it around, 98 bottles of beer on the wall.\n";
             assert_eq!(BottleVerseFactory.lyrics(99), expected);
         }
 
         #[test]
-        fn test_verse_3_bottles() {
+        fn verse_general_rule_lower_bound() {
             let expected = "3 bottles of beer on the wall, 3 bottles of beer.
 Take one down and pass it around, 2 bottles of beer on the wall.\n";
             assert_eq!(BottleVerseFactory.lyrics(3), expected);
         }
 
         #[test]
-        fn test_verse_2_bottles() {
+        fn verse_7() {
+            let expected = "7 bottles of beer on the wall, 7 bottles of beer.
+Take one down and pass it around, 1 six-pack of beer on the wall.\n";
+            assert_eq!(BottleVerseFactory.lyrics(7), expected);
+        }
+
+        #[test]
+        fn verse_6() {
+            let expected = "1 six-pack of beer on the wall, 1 six-pack of beer.
+Take one down and pass it around, 5 bottles of beer on the wall.\n";
+            assert_eq!(BottleVerseFactory.lyrics(6), expected);
+        }
+
+        #[test]
+        fn verse_2() {
             let expected = "2 bottles of beer on the wall, 2 bottles of beer.
 Take one down and pass it around, 1 bottle of beer on the wall.\n";
             assert_eq!(BottleVerseFactory.lyrics(2), expected);
         }
 
         #[test]
-        fn test_verse_1() {
+        fn verse_1() {
             let expected = "1 bottle of beer on the wall, 1 bottle of beer.
 Take it down and pass it around, no more bottles of beer on the wall.\n";
             assert_eq!(BottleVerseFactory.lyrics(1), expected);
         }
 
         #[test]
-        fn test_verse_0_bottles() {
+        fn verse_0() {
             let expected = "No more bottles of beer on the wall, no more bottles of beer.
 Go to the store and buy some more, 99 bottles of beer on the wall.\n";
             assert_eq!(BottleVerseFactory.lyrics(0), expected);
