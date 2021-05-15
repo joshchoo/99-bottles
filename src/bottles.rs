@@ -320,7 +320,7 @@ impl BottleVerse {
 }
 
 #[cfg(test)]
-mod verse_tests {
+mod bottle_tests {
     use super::*;
 
     #[test]
@@ -697,5 +697,47 @@ Go to the store and buy some more, 99 bottles of beer on the wall.
 ";
 
         assert_eq!(Bottle::default().song(), expected);
+    }
+}
+
+pub fn type_of<T>(_: T) -> &'static str {
+    std::any::type_name::<T>()
+}
+
+#[cfg(test)]
+mod bottle_number_tests {
+    use super::*;
+
+    mod bottle_number_of {
+        use super::*;
+        use std::any::TypeId;
+
+        #[test]
+        fn test_returns_correct_struct_type() {
+            {
+                let res = BottleNumber::of(0);
+                let actual_id = (&*res.as_any()).type_id();
+
+                assert_eq!(actual_id, TypeId::of::<BottleNumberZero>());
+            }
+            {
+                let res = BottleNumber::of(1);
+                let actual_id = (&*res.as_any()).type_id();
+
+                assert_eq!(actual_id, TypeId::of::<BottleNumberOne>());
+            }
+            {
+                let res = BottleNumber::of(6);
+                let actual_id = (&*res.as_any()).type_id();
+
+                assert_eq!(actual_id, TypeId::of::<BottleNumberSix>());
+            }
+            {
+                let res = BottleNumber::of(99);
+                let actual_id = (&*res.as_any()).type_id();
+
+                assert_eq!(actual_id, TypeId::of::<BottleNumber>());
+            }
+        }
     }
 }
