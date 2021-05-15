@@ -1,5 +1,5 @@
-use bottles::Bottle;
+use bottles::CountdownSong;
 
 fn main() {
-    println!("{}", Bottle::default().song());
+    println!("{}", CountdownSong::default().song());
 }

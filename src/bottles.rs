@@ -7,19 +7,19 @@ pub trait VerseTrait {
 
 type VerseTemplate = Box<dyn VerseTrait>;
 
-pub struct Bottle {
+pub struct CountdownSong {
     verse_template: VerseTemplate,
 }
 
-impl Default for Bottle {
+impl Default for CountdownSong {
     fn default() -> Self {
         Self::new(Box::new(BottleVerseFactory))
     }
 }
 
-impl Bottle {
+impl CountdownSong {
     pub fn new(verse_template: VerseTemplate) -> Self {
-        Bottle { verse_template }
+        CountdownSong { verse_template }
     }
 
     pub fn song(&self) -> String {
@@ -331,7 +331,7 @@ Take one down and pass it around, 98 bottles of beer on the wall.
 98 bottles of beer on the wall, 98 bottles of beer.
 Take one down and pass it around, 97 bottles of beer on the wall.
 ";
-        assert_eq!(Bottle::default().verses(99, 98), expected);
+        assert_eq!(CountdownSong::default().verses(99, 98), expected);
     }
 
     #[test]
@@ -345,7 +345,7 @@ Take it down and pass it around, no more bottles of beer on the wall.
 No more bottles of beer on the wall, no more bottles of beer.
 Go to the store and buy some more, 99 bottles of beer on the wall.
 ";
-        assert_eq!(Bottle::default().verses(2, 0), expected);
+        assert_eq!(CountdownSong::default().verses(2, 0), expected);
     }
 }
 
@@ -656,7 +656,7 @@ No more bottles of beer on the wall, no more bottles of beer.
 Go to the store and buy some more, 99 bottles of beer on the wall.
 ";
 
-        assert_eq!(Bottle::default().song(), expected);
+        assert_eq!(CountdownSong::default().song(), expected);
     }
 }
 
