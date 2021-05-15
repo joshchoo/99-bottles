@@ -1,4 +1,5 @@
 use core::fmt;
+use std::any::Any;
 
 pub trait VerseTrait {
     fn lyrics(&self, number: i32) -> String;
@@ -51,6 +52,7 @@ trait BottleNumberTrait {
     fn action(&self) -> String;
     fn container(&self) -> String;
     fn successor(&self) -> Box<dyn BottleNumberTrait>;
+    fn as_any(&self) -> &dyn Any;
 }
 
 impl fmt::Display for Box<dyn BottleNumberTrait> {
@@ -122,6 +124,10 @@ impl BottleNumberTrait for BottleNumber {
     fn successor(&self) -> Box<dyn BottleNumberTrait> {
         self.successor()
     }
+
+    fn as_any(&self) -> &dyn Any {
+        self
+    }
 }
 
 struct BottleNumberZero {
@@ -168,6 +174,10 @@ impl BottleNumberTrait for BottleNumberZero {
 
     fn successor(&self) -> Box<dyn BottleNumberTrait> {
         self.successor()
+    }
+
+    fn as_any(&self) -> &dyn Any {
+        self
     }
 }
 
@@ -222,6 +232,10 @@ impl BottleNumberTrait for BottleNumberOne {
     fn successor(&self) -> Box<dyn BottleNumberTrait> {
         self.successor()
     }
+
+    fn as_any(&self) -> &dyn Any {
+        self
+    }
 }
 
 struct BottleNumberSix {
@@ -267,6 +281,10 @@ impl BottleNumberTrait for BottleNumberSix {
 
     fn successor(&self) -> Box<dyn BottleNumberTrait> {
         self.successor()
+    }
+
+    fn as_any(&self) -> &dyn Any {
+        self
     }
 }
 
