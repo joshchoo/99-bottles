@@ -15,7 +15,7 @@ pub struct CountdownSong {
 
 impl CountdownSong {
     pub fn new(verse_template: VerseTemplate, max: i32, min: i32) -> Self {
-        CountdownSong {
+        Self {
             verse_template,
             max,
             min,
@@ -72,7 +72,7 @@ struct BottleNumber {
 
 impl BottleNumber {
     fn new(number: i32) -> Self {
-        BottleNumber { number }
+        Self { number }
     }
 
     fn of(number: i32) -> Box<dyn BottleNumberTrait> {
@@ -136,8 +136,7 @@ struct BottleNumberZero {
 
 impl BottleNumberZero {
     fn new(number: i32) -> Self {
-        BottleNumberZero {
-            // Use composition instead of inheritance to re-use BottleNumber's behaviours
+        Self {
             bottle_number: BottleNumber::new(number),
         }
     }
@@ -187,7 +186,7 @@ struct BottleNumberOne {
 
 impl BottleNumberOne {
     fn new(number: i32) -> Self {
-        BottleNumberOne {
+        Self {
             bottle_number: BottleNumber::new(number),
         }
     }
@@ -244,7 +243,7 @@ struct BottleNumberSix {
 
 impl BottleNumberSix {
     fn new(number: i32) -> Self {
-        BottleNumberSix {
+        Self {
             bottle_number: BottleNumber::new(number),
         }
     }
@@ -302,7 +301,7 @@ struct BottleVerse {
 
 impl BottleVerse {
     fn new(bottle_number: Box<dyn BottleNumberTrait>) -> Self {
-        BottleVerse { bottle_number }
+        Self { bottle_number }
     }
 
     fn lyrics(&self) -> String {
